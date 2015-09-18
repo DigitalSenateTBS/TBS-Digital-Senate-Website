@@ -46,3 +46,11 @@
 .learn-more a {
   color: #00b0ff;
 }
+
+.bulletin h1 {
+  color: black;
+  display: inline;
+  position: relative;
+  width: 100px;
+  height: 400px;
+}

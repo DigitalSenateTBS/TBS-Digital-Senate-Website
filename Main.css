@@ -49,13 +49,37 @@
 
 .footnote h6 {
  color: darkblue;
- font: 'Shift', 'sans - serif';
+ font-family: 'Shift', sans-serif;
  font-weight: bold;
 }
 
 .footnote p {
     color: black;
-    font: 'Shift', 'sans-serif';
+    font-family: 'Shift', sans-serif;
     font-weight: normal;
     font-size: 11px;
+}
+
+.news-header {
+    background: url(http://encomium.ng/wp-content/uploads/2014/03/Newspapers.jpg);
+    background-size: 100%;
+    background-repeat: no-repeat;
+    
+}
+
+.news-main h1{
+    line-height: 2em;
+    margin-left: 2cm;
+    font-family: 'Shift', sans-serif;
+    font-weight: bold;
+    font-size: 40px;
+    color: darkblue;
+}
+
+.daily-bulletin h3 {
+    margin-left: 4cm; 
+}
+
+.daily-bulletin p {
+    margin-left: 4cm;   
 }

@@ -46,3 +46,16 @@
 .learn-more a {
   color: #00b0ff;
 }
+
+.footnote h6 {
+ color: darkblue;
+ font: 'Shift', 'sans - serif';
+ font-weight: bold;
+}
+
+.footnote p {
+    color: black;
+    font: 'Shift', 'sans-serif';
+    font-weight: normal;
+    font-size: 11px;
+}

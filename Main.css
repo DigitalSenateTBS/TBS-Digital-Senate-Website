@@ -92,3 +92,33 @@
     color: lightblue;
     text-shadow: 30px 30px #000000;
 }
+
+.background-iris {
+  height: 500px;
+  background-repeat: no-repeat;
+  background-size: cover;   
+  background-color: lightgrey;
+}
+
+.background-iris h3{
+ font-family: 'Shift', sans-serif;
+ font-weight: bold;
+ font-size: 50px;
+ color: lightslategray;
+ margin-left: 9cm;
+}
+
+.comments-iris {
+  height: 500px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: grey;
+}
+
+.comments-iris h3 {
+    margin-left: 9.25cm;
+    font-family: 'Shift', sans-serif;
+    font-weight: bold;
+    font-size: 35px;
+    color: black;
+}

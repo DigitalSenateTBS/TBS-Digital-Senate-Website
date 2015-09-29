@@ -83,3 +83,12 @@
 .daily-bulletin p {
     margin-left: 4cm;   
 }
+
+.iris-headline h1 {
+    margin-left: 4cm;
+    font-family: 'Shift', sans-serif;
+    font-weight: bold;
+    font-size: 350px;
+    color: lightblue;
+    text-shadow: 30px 30px #000000;
+}

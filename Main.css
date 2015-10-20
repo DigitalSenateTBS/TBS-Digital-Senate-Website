@@ -61,7 +61,7 @@
 }
 
 .news-header {
-    background: url(http://encomium.ng/wp-content/uploads/2014/03/Newspapers.jpg);
+    background: url(Newspapers.jpg);
     background-size: 100%;
     background-repeat: no-repeat;
     
@@ -121,4 +121,7 @@
     font-weight: bold;
     font-size: 35px;
     color: black;
+}
+.nav {
+    background: #FFFFFF
 }

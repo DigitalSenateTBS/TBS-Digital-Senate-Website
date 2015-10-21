@@ -125,3 +125,20 @@
 .nav {
     background: #FFFFFF
 }
+
+.daily_bulletin_article h4 {
+    color: darkblue;
+    font-family: 'Shift', sans-serif;
+    font-weight: bold;
+    text-align: center;
+}
+
+.daily_bulletin_article p {
+    text-align: center;
+}
+
+.daily_bulletin_article {
+    background-color: #F2F2F2;
+    margin: 1px 1px 1px 1px;
+    padding: 1px 1px 1px 1px;
+}

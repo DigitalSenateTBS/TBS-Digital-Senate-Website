@@ -127,12 +127,18 @@
 }
 .container2 {
     background: darkblue;
+    width: 50px;
+    height: 23px;
+    margin-left: 0.5cm;
 }
 
-.nav2 li {
+.nav2 td {
  display: inline;
 }
 
+td {
+    font-family: sans-serif;
+}
 .daily_bulletin_article h4 {
     color: darkblue;
     font-family: 'Shift', sans-serif;

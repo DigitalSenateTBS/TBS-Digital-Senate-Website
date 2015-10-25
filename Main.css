@@ -125,6 +125,13 @@
 .nav {
     background: #FFFFFF;
 }
+.container2 {
+    background: darkblue;
+}
+
+.nav2 li {
+ display: inline;
+}
 
 .daily_bulletin_article h4 {
     color: darkblue;
@@ -146,4 +153,11 @@
 .align-center {
     display: flex;
     align-items:center;
+}
+
+#map {
+    width: 250px;
+    height: 200px;
+    background-color: #CCC;
+    margin-left: 20cm;
 }

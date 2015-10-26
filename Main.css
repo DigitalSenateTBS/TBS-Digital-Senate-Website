@@ -123,9 +123,22 @@
     color: black;
 }
 .nav {
-    background: #FFFFFF
+    background: #FFFFFF;
+}
+.container2 {
+    background: darkblue;
+    width: 50px;
+    height: 23px;
+    margin-left: 0.5cm;
 }
 
+.nav2 td {
+ display: inline;
+}
+
+td {
+    font-family: sans-serif;
+}
 .daily_bulletin_article h4 {
     color: darkblue;
     font-family: 'Shift', sans-serif;
@@ -146,4 +159,11 @@
 .align-center {
     display: flex;
     align-items:center;
+}
+
+#map {
+    width: 250px;
+    height: 200px;
+    background-color: #CCC;
+    margin-left: 20cm;
 }

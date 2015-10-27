@@ -162,11 +162,11 @@ td {
 }
 
 #map {
-    width: 250px;
-    height: 200px;
+    width: 400px;
+    height: 300px;
     background-color: #CCC;
     margin-left: 20cm;
-    margin-top: -3cm;
+    margin-top: -4cm;
 }
 
 .parent li{
@@ -201,6 +201,6 @@ td {
     margin-bottom: 0px;
     color: black;
     font-weight: bold;
-    text-align: left;
+    text-align: center;
     font-size: 16px;
 }

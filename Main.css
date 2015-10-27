@@ -167,3 +167,20 @@ td {
     background-color: #CCC;
     margin-left: 20cm;
 }
+
+.parent li{
+    width: 79%;
+    display: block;
+    text-decoration: none;
+    background-color: #33b9df;
+    color: #fff;
+    font-weight: 400;
+    padding: 0.7em 15% 0.7em 6%;
+}
+
+#contentMenu {
+    width: 180px;
+    margin-top: 0px;
+    margin-right: 0px;
+    margin-bottom: 1px;
+    padding-top: 0px;

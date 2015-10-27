@@ -166,6 +166,7 @@ td {
     height: 200px;
     background-color: #CCC;
     margin-left: 20cm;
+    margin-top: -3cm;
 }
 
 .parent li{
@@ -176,11 +177,30 @@ td {
     color: #fff;
     font-weight: 400;
     padding: 0.7em 15% 0.7em 6%;
+    list-style-type: none;
+    margin-bottom: 0px;
+    text-align: center;
+}
+
+.parent a {
+  color: white;
+  font-size: 15px;
 }
 
 #contentMenu {
-    width: 180px;
+    width: 200px;
     margin-top: 0px;
     margin-right: 0px;
-    margin-bottom: 1px;
+    margin-bottom: 0px;
     padding-top: 0px;
+    list-style-type: none;
+    
+}
+
+.parent p{
+    margin-bottom: 0px;
+    color: black;
+    font-weight: bold;
+    text-align: left;
+    font-size: 16px;
+}

@@ -252,7 +252,7 @@ td {
     list-style-type: none;
 }
 
-.confirm{
+#confirm{
    width: 100px;
    background: lightblue;
 }

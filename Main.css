@@ -252,6 +252,7 @@ td {
     list-style-type: none;
 }
 
-.LoginList .confirm{
-    width: 40px;
+.confirm{
+   width: 100px;
+   background: lightblue;
 }

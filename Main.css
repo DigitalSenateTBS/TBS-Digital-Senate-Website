@@ -242,3 +242,16 @@ td {
  width: 500px;
  text-align: justify;
 }
+
+.LoginList ul{
+    list-style-type: none;
+    
+}
+
+.LoginList{
+    list-style-type: none;
+}
+
+.LoginList .confirm{
+    width: 40px;
+}

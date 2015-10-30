@@ -41,12 +41,12 @@
                         <li><input type="text" id="UserName" size="20"></li>
                         <li><h3>Password</h3></li>
                         <li><input type="text" id="Password" size="20"></li>
+                        <li><input type="button" id="confirm" value = "Enter"</li>
                     </ul>
                     </li>
-                    <input id="confirm" type="submit" name="button" value="enter"/>
-                </div>
             </div>
         </div>
+            
                 
 
     <div class="learn-more">
@@ -71,20 +71,31 @@
 	  </div>
 	</div>
         <script type="text/javascript">
-            
-            var privelegecheck = false;
-            var userInput = document.getElementById("UserName").textContent;
-            var passInput = document.getElementById("Password").textContent;
-	       
-            document.getElementById("confirm").onclick = function() {
-                if ( userInput == "digitalsenate") {
-                    privelegecheck = true;
-                    alert("Welcome!");
+
+                       
+
+            function processData(allText) {
+                type: "GET",
+                url: "credentials.txt",
+                dataType: "text",
+                success: function(data) {processData(data);}
+                var allTextLines = allText.split(/\r\n|\n/);
+                var headers = allTextLines[0].split(',');
+                var lines = [];
+
+                for (var i=1; i<allTextLines.length; i++) {
+                    var data = allTextLines[i].split(',');
+                        if (data.length == headers.length) {
+
+                            var tarr = [];
+                            for (var j=0; j<headers.length; j++) {
+                                tarr.push(headers[j]+":"+data[j]);
+                            }
+                     lines.push(tarr);
                 }
-                else {
-                    alert("Credentials do not match");
-                }   
-            };
+            }
+                alert(lines);
+        }
         </script>
         <div class = "footnote">
         <div class = "container-fluid">

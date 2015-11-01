@@ -41,7 +41,7 @@
                         <li><input type="text" id="UserName" size="20"></li>
                         <li><h3>Password</h3></li>
                         <li><input type="text" id="Password" size="20"></li>
-                        <li><input type="button" id="confirm" value = "Enter"</li>
+                        <li><input type="button" id ="confirm" value = "Enter"</li>
                     </ul>
                     </li>
             </div>
@@ -70,32 +70,36 @@
 	    </div>
 	  </div>
 	</div>
-        <script type="text/javascript">
-
-                       
+            <script type = "text/javascript">
+                    
+            $(document).ready(function() {
+                $.ajax({
+                    type: "GET",
+                    url: "credentials.txt",
+                    dataType: "text",
+                    success: function(data) {processData(data);}
+                });
+            });
 
             function processData(allText) {
-                type: "GET",
-                url: "credentials.txt",
-                dataType: "text",
-                success: function(data) {processData(data);}
-                var allTextLines = allText.split(/\r\n|\n/);
-                var headers = allTextLines[0].split(',');
-                var lines = [];
+                    var allTextLines = allText.split(/\r\n|\n/);
+                    var headers = allTextLines[0].split(',');
+                    var lines = [];
 
-                for (var i=1; i<allTextLines.length; i++) {
-                    var data = allTextLines[i].split(',');
+                    for (var i=1; i<allTextLines.length; i++) {
+                        var data = allTextLines[i].split(',');
                         if (data.length == headers.length) {
 
-                            var tarr = [];
-                            for (var j=0; j<headers.length; j++) {
+                                var tarr = [];
+                                for (var j=0; j<headers.length; j++) {
                                 tarr.push(headers[j]+":"+data[j]);
-                            }
-                     lines.push(tarr);
+                        }
+                            lines.push(tarr);
+                    }
                 }
+                    alert(lines);
             }
-                alert(lines);
-        }
+        
         </script>
         <div class = "footnote">
         <div class = "container-fluid">

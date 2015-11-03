@@ -1,0 +1,176 @@
+{
+   ltdl - not our fault
+   Memcheck:Addr8
+   obj:/lib/ld-2.7.so
+   obj:/lib/ld-2.7.so
+   obj:/lib/ld-2.7.so
+   obj:/lib/ld-2.7.so
+   obj:/lib/libdl-2.7.so
+   obj:/lib/ld-2.7.so
+   obj:/lib/libdl-2.7.so
+   fun:dlopen
+   fun:sys_dl_open
+   fun:tryall_dlopen
+   fun:find_module
+   fun:try_dlopen
+}
+{
+   ltdl - not our fault
+   Memcheck:Addr8
+   obj:/lib/ld-2.7.so
+   obj:/lib/ld-2.7.so
+   obj:/lib/ld-2.7.so
+   obj:/lib/ld-2.7.so
+   obj:/lib/ld-2.7.so
+   obj:/lib/libdl-2.7.so
+   obj:/lib/ld-2.7.so
+   obj:/lib/libdl-2.7.so
+   fun:dlopen
+   fun:sys_dl_open
+   fun:tryall_dlopen
+   fun:find_module
+}
+{
+   ltdl - not our fault
+   Memcheck:Addr8
+   obj:/lib/ld-2.7.so
+   obj:/lib/ld-2.7.so
+   obj:/lib/ld-2.7.so
+   obj:/lib/ld-2.7.so
+   obj:/lib/ld-2.7.so
+   obj:/lib/libdl-2.7.so
+   obj:/lib/ld-2.7.so
+   obj:/lib/libdl-2.7.so
+   fun:dlopen
+   fun:sys_dl_open
+   fun:tryall_dlopen
+   fun:find_module
+}
+{
+   ltdl - not our fault
+   Memcheck:Addr8
+   obj:/lib/ld-2.7.so
+   obj:/lib/ld-2.7.so
+   obj:/lib/ld-2.7.so
+   obj:/lib/ld-2.7.so
+   obj:/lib/ld-2.7.so
+   obj:/lib/ld-2.7.so
+   obj:/lib/libdl-2.7.so
+   obj:/lib/ld-2.7.so
+   obj:/lib/libdl-2.7.so
+   fun:dlopen
+   fun:sys_dl_open
+   fun:tryall_dlopen
+}
+{
+   ltdl - not our fault
+   Memcheck:Addr8
+   obj:/lib/ld-2.7.so
+   obj:/lib/ld-2.7.so
+   obj:/lib/ld-2.7.so
+   obj:/lib/ld-2.7.so
+   obj:/lib/ld-2.7.so
+   obj:/lib/ld-2.7.so
+   obj:/lib/ld-2.7.so
+   obj:/lib/libdl-2.7.so
+   obj:/lib/ld-2.7.so
+   obj:/lib/libdl-2.7.so
+   fun:dlopen
+   fun:sys_dl_open
+}
+{
+   ltdl - not our fault
+   Memcheck:Addr8
+   obj:/lib/ld-2.7.so
+   obj:/lib/ld-2.7.so
+   obj:/lib/ld-2.7.so
+   obj:/lib/ld-2.7.so
+   obj:/lib/libc-2.7.so
+   obj:/lib/libdl-2.7.so
+   obj:/lib/ld-2.7.so
+   obj:/lib/libdl-2.7.so
+   fun:dlsym
+   fun:sys_dl_sym
+   fun:lt_dlsym
+   fun:_ZN12Pass_manager10add_pluginEP18lt_dlhandle_structP6StringS3_
+}
+{
+   ltdl - not our fault
+   Memcheck:Cond
+   obj:/lib/ld-2.7.so
+   obj:/lib/ld-2.7.so
+   obj:/lib/libc-2.7.so
+   obj:/lib/libdl-2.7.so
+   obj:/lib/ld-2.7.so
+   obj:/lib/libdl-2.7.so
+   fun:dlsym
+   fun:sys_dl_sym
+   fun:lt_dlsym
+   fun:_ZN11Plugin_pass3runEPN2IR10PHP_scriptEP12Pass_manager
+   fun:_ZN4Pass8run_passEPN2IR10PHP_scriptEP12Pass_manager
+   fun:_ZN12Pass_manager8run_passEP4PassPN2IR10PHP_scriptEb
+}
+{
+   ltdl - not our fault
+   Memcheck:Cond
+   obj:/lib/ld-2.7.so
+   obj:/lib/ld-2.7.so
+   obj:/lib/libc-2.7.so
+   obj:/lib/libdl-2.7.so
+   obj:/lib/ld-2.7.so
+   obj:/lib/libdl-2.7.so
+   fun:dlsym
+   fun:sys_dl_sym
+   fun:lt_dlsym
+   fun:_ZN11Plugin_pass3runEPN2IR10PHP_scriptEP12Pass_manager
+   fun:_ZN4Pass8run_passEPN2IR10PHP_scriptEP12Pass_manager
+   fun:_ZN12Pass_manager8run_passEP4PassPN2IR10PHP_scriptEb
+}
+{
+   ltdl - not our fault
+   Memcheck:Addr8
+   obj:/lib/ld-2.7.so
+   obj:/lib/ld-2.7.so
+   obj:/lib/libdl-2.7.so
+   obj:/lib/ld-2.7.so
+   obj:/lib/libdl-2.7.so
+   fun:dlopen
+   fun:sys_dl_open
+   fun:tryall_dlopen
+   fun:find_module
+   fun:try_dlopen
+   fun:lt_dlopen
+   fun:lt_dlopenext
+}
+{
+   ltdl - not our fault
+   Memcheck:Cond
+   obj:/lib/ld-2.7.so
+   obj:/lib/ld-2.7.so
+   obj:/lib/libc-2.7.so
+   obj:/lib/libdl-2.7.so
+   obj:/lib/ld-2.7.so
+   obj:/lib/libdl-2.7.so
+   fun:dlsym
+   fun:sys_dl_sym
+   fun:lt_dlsym
+   fun:_ZN12Pass_manager10add_pluginEP18lt_dlhandle_structP6StringS3_
+   fun:_Z12init_pluginsP12Pass_manager
+   fun:main
+}
+{
+   ltdl - not our fault
+   Memcheck:Cond
+   obj:/lib/ld-2.7.so
+   obj:/lib/ld-2.7.so
+   obj:/lib/libc-2.7.so
+   obj:/lib/libdl-2.7.so
+   obj:/lib/ld-2.7.so
+   obj:/lib/libdl-2.7.so
+   fun:dlsym
+   fun:sys_dl_sym
+   fun:lt_dlsym
+   fun:_ZN12Pass_manager10add_pluginEP18lt_dlhandle_structP6StringS3_
+   fun:_Z12init_pluginsP12Pass_manager
+   fun:main
+}

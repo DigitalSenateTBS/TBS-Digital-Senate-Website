@@ -256,3 +256,14 @@ td {
    width: 100px;
    background: lightblue;
 }
+
+.logo li img{
+    width:100px;
+    height:100px;
+    list-style: none;
+}
+
+.logo{
+    list-style: none;
+    margin-bottom: -1cm;
+}

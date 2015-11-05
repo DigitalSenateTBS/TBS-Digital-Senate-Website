@@ -1,0 +1,15 @@
+<div class = "footnote">
+        <div class = "container-fluid">
+            <div class="row align-center">
+	  	        <div class="col-md-12">
+                    <div class="pull-left">
+                        <h6>Powered by SSP and The Digital Senates</h6>
+                        <p>This is a non-licensed website created by students of The British School of Barra. Feel free to contact us at: digitalsenatebarra@britishschool.g12.br<p>
+                    </div>
+                    <div class="pull-right">
+                        <img src="TBS_Logo.png">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

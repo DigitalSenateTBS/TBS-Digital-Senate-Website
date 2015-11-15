@@ -546,7 +546,6 @@ $(document).ready(function(){
 				var endDate = clickAgendaItem.endDate;
 				var allDay = clickAgendaItem.allDay;
 				var data = clickAgendaItem.data;
-				// in our example add agenda modal form we put some fake data in the agenda data. we can retrieve it here.
 				$("#display-event-form").append(
 					"<br><b>" + title+ "</b><br><br>"		
 				);				

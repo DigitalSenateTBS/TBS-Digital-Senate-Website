@@ -58,11 +58,7 @@
     </div> 
     
             <?php
-                print "<h2>php program to add to numbers..</h2><br />";
-                $val1 = 20;
-                $val2 = 20;
-                $sum = $val1 + $val2;
-                echo "Result(SUM): $sum";
+                
             ?>
                 <!-- need three pages, HTML, for nav2 -->
             <div id = "contentMenu" class = "left">

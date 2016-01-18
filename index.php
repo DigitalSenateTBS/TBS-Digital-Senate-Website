@@ -24,8 +24,14 @@
   </div>
   <script src="js/html5shiv.js"></script>
   <![endif]-->
-
   <script src='js/device.min.js'></script>
+  <?php
+		if (isset($_POST['login'])) 
+		{
+			echo"S";
+    	}
+    	?>
+	
 </head>
 
 <body>
@@ -60,7 +66,21 @@
           <input name="Phone" placeHolder="Phone" type="text" data-constraints="@NotEmpty @Required @Phone">
         </div>
         <div class="booking-form_controls">
-          <a href="#" class="btn" data-type="submit"> Confirm </a>
+        	<a class="btn" data-type="submit" name="login"> Confirm </a>
+      	<!--<script>
+        		$(document).ready(function(){
+    				$('.btn').click(function(){
+        				var clickBtnValue = $(this).val();
+        				var ajaxurl = 'ajax.php',
+       					data =  {'action': clickBtnValue};
+        				$.post(ajaxurl, data, function (response) {
+            			alert("action performed successfully");
+       					 });
+    				});
+
+				});
+        	</script> --!>
+        	
         </div>
       </form>
     </div>

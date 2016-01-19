@@ -57,7 +57,9 @@
       <h2> </h2>
 
       <h3> Log In</h3>
-
+		<?php
+			
+		?>
       <form id="bookingForm" class="booking-form">
         <div class="tmInput">
           <input name="Name" placeHolder="Name" type="text" data-constraints='@NotEmpty @Required @AlphaSpecial'>

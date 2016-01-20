@@ -68,21 +68,24 @@
           <input name="Phone" placeHolder="Phone" type="text" data-constraints="@NotEmpty @Required @Phone">
         </div>
         <div class="booking-form_controls">
-        	<a class="btn" data-type="submit" name="login"> Confirm </a>
+        	<a class="btn" data-type="submit" name="login"> Login </a> 
+        	<form method="post" action="ajax.php">
+        	<input type="submit" name="select" value="Confirm" />
+        	</form>
       	<!--<script>
         		$(document).ready(function(){
-    				$('.btn').click(function(){
+    				$('.button').click(function(){
         				var clickBtnValue = $(this).val();
         				var ajaxurl = 'ajax.php',
-       					data =  {'action': clickBtnValue};
-        				$.post(ajaxurl, data, function (response) {
+        				data =  {'action': clickBtnValue};
+        			$.post(ajaxurl, data, function (response) {
+            			// Response div goes here.
             			alert("action performed successfully");
-       					 });
+        				});
     				});
 
 				});
-        	</script> --!>
-        	
+        	</script> <--!>
         </div>
       </form>
     </div>
@@ -170,38 +173,6 @@
       </div>
     </section>
 
-    <section class="thumb-container">
-      <div class="item">
-        <a class="lazy-img thumb" style="padding-bottom:73.17073170731707%;" href="images/page-1_img04_original.jpg">
-          <img data-src="images/page-1_img04.jpg" src="#" alt=""/>
-          <span class="thumb_overlay"></span>
-        </a>
-      </div>
-      <div class="item">
-        <a class="lazy-img thumb" style="padding-bottom:73.17073170731707%;" href="images/page-1_img05_original.jpg">
-          <img data-src="images/page-1_img05.jpg" src="#" alt=""/>
-          <span class="thumb_overlay"></span>
-        </a>
-      </div>
-      <div class="item">
-        <a class="lazy-img thumb" style="padding-bottom:73.17073170731707%;" href="images/page-1_img06_original.jpg">
-          <img data-src="images/page-1_img06.jpg" src="#" alt=""/>
-          <span class="thumb_overlay"></span>
-        </a>
-      </div>
-      <div class="item">
-        <a class="lazy-img thumb" style="padding-bottom:73.17073170731707%;" href="images/page-1_img07_original.jpg">
-          <img data-src="images/page-1_img07.jpg" src="#" alt=""/>
-          <span class="thumb_overlay"></span>
-        </a>
-      </div>
-      <div class="item">
-        <a class="lazy-img thumb" style="padding-bottom:73.17073170731707%;" href="images/page-1_img08_original.jpg">
-          <img data-src="images/page-1_img08.jpg" src="#" alt=""/>
-          <span class="thumb_overlay"></span>
-        </a>
-      </div>
-    </section>
 
   <!--========================================================
                             FOOTER

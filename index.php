@@ -69,25 +69,23 @@
         </div>
         <div class="booking-form_controls">
         	<a class="btn" data-type="submit" name="login"> Login </a> 
-        	<form method="post" action="ajax.php">
-        	<input type="submit" name="select" value="Confirm" />
+        	<script type="text/javascript">
+        		function on_callPhp()
+        		{
+        			var result="<?php php_func();?>";
+        			alert(result);
+        			return false;
+        		}
+        	</script> 
+        	<form action="" method="POST">
+        	<input type="button" onclick="on_callPhp()" value="Confirm" />
         	</form>
-      	<!--<script>
-        		$(document).ready(function(){
-    				$('.button').click(function(){
-        				var clickBtnValue = $(this).val();
-        				var ajaxurl = 'ajax.php',
-        				data =  {'action': clickBtnValue};
-        			$.post(ajaxurl, data, function (response) {
-            			// Response div goes here.
-            			alert("action performed successfully");
-        				});
-    				});
-
-				});
-        	</script> <--!>
-        </div>
-      </form>
+        		<?php
+        			function php_func() {
+        					echo "hello";
+        				}
+        		?>
+      	 </div>
     </div>
   </header>
   <!--========================================================

@@ -5,4 +5,5 @@
     <script src="js/bootstrap.js"></script>
     <script src="js/transition.js"></script>
     <script src="js/collapse.js"></script>
+    <script src="js/webservice.js"></script>
     <link rel="stylesheet" href="css/main.css">

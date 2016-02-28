@@ -1,3 +1,4 @@
+<?php $page_name = pathinfo($_SERVER['PHP_SELF'],PATHINFO_FILENAME);?>
 <?php require_once 'top_all.php';?>
 
 <!DOCTYPE HTML>
@@ -28,7 +29,7 @@
             </div>
                 <div class = "daily-bulletin">
                 <h3> Daily Bulletin </h3>
-                    <p> Daily Bulletin may be found in pdf format<a href="db.pdf"> here.</a> </p> 
+             <!--   <p> Daily Bulletin may be found in pdf format<a href="db.pdf"> here.</a> </p> -->
             </div>
         </div>
         

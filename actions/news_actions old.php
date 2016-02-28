@@ -1,3 +1,4 @@
+<?php $page_name = pathinfo($_SERVER['PHP_SELF'],PATHINFO_FILENAME);?>
 <?php
 	include_once __DIR__ . '/../top_all.php';
 
@@ -21,7 +22,7 @@
 		}
 		if ($action == "edit"){
 			header("Location: ". config::url() . "/news_add.php?id=" . $id);
-			exit;
+			exit();
 		}
 		if ($action == "toggleHide"){
 			news::toggleHide($id);

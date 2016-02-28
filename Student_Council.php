@@ -1,3 +1,4 @@
+<?php $page_name = pathinfo($_SERVER['PHP_SELF'],PATHINFO_FILENAME);?>
 <?php require_once 'top_all.php';?>
 
 <!DOCTYPE HTML>
@@ -21,7 +22,7 @@
         <div class="jumbotron">
           <div class="container">
             <h1>TBS Student Council</h1>
-            <p>See what they are doingS!</p>
+            <p>See what they are doing!</p>
           </div>
         </div>
         

@@ -1,3 +1,4 @@
+<?php $page_name = pathinfo($_SERVER['PHP_SELF'],PATHINFO_FILENAME);?>
 <?php require_once 'top_all.php';?>
 
 <!DOCTYPE HTML>
@@ -32,13 +33,13 @@
           	<table class="table table-bordered table-striped table-hover">
             	<tr>
                       <th>
-                          Name <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
+                          Name <span class="caret" aria-hidden="true"></span>
                       </th>
                       <th>
-                          Subject
+                          Subject <span class="caret" aria-hidden="true"></span>
                       </th>
                       <th>
-                          Email
+                          Email <span class="caret" aria-hidden="true"></span>
                       </th>
                 </tr>
               <?php 

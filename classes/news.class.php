@@ -35,10 +35,14 @@ class news {
 					u.created_on,
 					u.last_modified
 					FROM sv_news u
-        			WHERE position = " . $position . " AND status = 'active'
+        			WHERE position = ? AND status = ?
         			ORDER BY ordering ASC;";
 		
-		$result = $db->query ( $query );
+		$params = array();
+		$params[] = $position;
+		$params[] = 'active';
+		
+		$result = $db->query($query,$params);
 		
 		return $result;
 	}
@@ -76,10 +80,15 @@ class news {
 					u.created_on,
 					u.last_modified
 					FROM sv_news u
-        			WHERE position = " . $position . " AND (status = 'active' OR status = 'hidden')
+        			WHERE position = ? AND (status = ? OR status = ?)
         			ORDER BY ordering ASC;";
 		
-		$result = $db->query ( $query ); 
+		$params = array();
+		$params[] = $position;
+		$params[] = 'active';
+		$params[] = 'hidden';
+		
+		$result = $db->query($query,$params);
 		
 		return $result;
 	}
@@ -97,9 +106,21 @@ class news {
 		$nowStr = $now->format ( 'Y-m-d H:i:s' );
 		
 		$cmd = "	INSERT INTO sv_news (position,ordering,audience,title,text,author_id,status,created_on,last_modified) values
-					(" . $position . "," . $ordering . "," . $audience . ",'" . $title . "','" . $text . "'," . $author_id . ",'" . $status . "','" . $nowStr . "','" . $nowStr . "')";
+					(?,?,?,?,?,?,?,?,?)";
 		
-		$result = $db->execSQLCmd ( $cmd );
+		$params = array();
+		$params[] = $position;
+		$params[] = $ordering;
+		$params[] = $audience;
+		$params[] = $title;
+		$params[] = $text;
+		$params[] = $author_id;
+		$params[] = $status;
+		$params[] = $nowStr;
+		$params[] = $nowStr;
+		
+		
+		$db->execSQLCmd ($cmd,$params);
 	}
 	
 	public static function reviewArticlesTable ($position) {
@@ -114,7 +135,7 @@ class news {
 		$previousid = null;
 		
 		while ($row = $result->fetchAssoc()){
-		
+		//TODO Deal with the case of the first and last article as their links need to be disabled.
 			$id = $row ['id'];
 			$title = $row['title'];
 			$text = $row ['text'];
@@ -128,38 +149,37 @@ class news {
 				$statuscircle = "glyphicon-eye-close";
 				$statusclass = "";
 				$statustitle = "Hide";
-				}
+			}
+				$tablestring .= "<div class='panel panel-default'>
+				    				<div class='panel-heading'" . $statusclass . ">
+				      					<h4 class='panel-title'>
+				        					<a data-toggle='collapse' data-parent='#accordion" . $position . "' href='#" . $id . "'>";
+				$tablestring .= $title;
+				$tablestring .= "		</a>
+								<span class='pull-right'>
+								<a onclick=\"actionCall('moveUp', " . $id . "," . $position . ");\" title='Move up'><span class='glyphicon glyphicon-arrow-up action-link'></span></a>
+								<a onclick=\"actionCall('moveDown', " . $id . "," . $position . ");\" title='Move down'><span class='glyphicon glyphicon-arrow-down action-link'></span></a>
+								<a href=' ". config::url() . user::getLinkPath('news_add') . "?id=" . $id . "' title='Edit'><span class='glyphicon glyphicon-pencil action-link'></span></a>
+								<a onclick=\"actionCall('toggleHide', " . $id . "," . $position . ");\" title='" . $statustitle . "'><span class='glyphicon " . $statuscircle . " action-link'></span></a>
+								<a onclick=\"actionCall('delete', " . $id . "," . $position . ");\" title='Delete'><span class='glyphicon glyphicon-remove-circle action-link'></span></a>
+								</span>
+								</h4>
+				    		</div>
+				    		<div id='" . $id . "' class='panel-collapse collapse'>
+	    						<div class='panel-body'>";
+				$tablestring .= $text;
+				$tablestring .="</div>
+				    				</div>
+				  						</div>
+								";
 				
-			$tablestring .= "<div class='panel panel-default'>
-			    				<div class='panel-heading'" . $statusclass . ">
-			      					<h4 class='panel-title'>
-			        					<a data-toggle='collapse' data-parent='#accordion" . $position . "' href='#" . $id . "'>";
-			$tablestring .= $title;
-			$tablestring .= "		</a>
-							<span class='pull-right'>
-							<a onclick=\"buttonClick('moveUp', " . $id . ");\" title='Move up'><span class='glyphicon glyphicon-arrow-up'></span></a>
-							<a onclick=\"buttonClick('moveDown', " . $id . ");\" title='Move down'><span class='glyphicon glyphicon-arrow-down'></span></a>
-							<a onclick=\"buttonClick('edit', " . $id . ");\" title='Edit'><span class='glyphicon glyphicon-pencil'></span></a>
-							<a onclick=\"buttonClick('toggleHide', " . $id . ");\" title='" . $statustitle . "'><span class='glyphicon " . $statuscircle . "'></span></a>
-							<a onclick=\"buttonClick('delete', " . $id . ");\" title='Delete'><span class='glyphicon glyphicon-remove-circle'></span></a>
-							</span>
-							</h4>
-			    		</div>
-			    		<div id='" . $id . "' class='panel-collapse collapse'>
-    						<div class='panel-body'>";
-			$tablestring .= $text;
-			$tablestring .="</div>
-			    				</div>
-			  						</div>
-							";
-			
-			$previousid = $id;
+				$previousid = $id;
 			
 		}
 		
-		$tablestring .= "</div>";
-		
-		return $tablestring;
+			$tablestring .= "</div>";
+			
+			return $tablestring;
 	}
 	
 	public static function readArticle ($id) {
@@ -179,9 +199,12 @@ class news {
 					u.created_on,
 					u.last_modified
 					FROM sv_news u
-        			WHERE id = " . $id . ";";
+        			WHERE id = ?;";
 		
-		$result = $db->query ( $query );
+		$params = array();
+		$params[] = $id;
+		
+		$result = $db->query ($query,$params);
 		
 		$row = $result->fetchAssoc();
 		
@@ -314,11 +337,14 @@ class news {
 		$db = svdb::getInstance ();
 		
 		$query = "	SELECT
-        			u.ordering
-					FROM sv_news u
-        			WHERE id = " . $id . ";";
+        			n.ordering ordering
+					FROM sv_news n
+        			WHERE id = ?;";
 		
-		$result = $db->query ( $query );
+		$params = array();
+		$params[] = $id;
+		
+		$result = $db->query ($query,$params);
 		
 		$row = $result->fetchAssoc();
 		 
@@ -332,11 +358,14 @@ class news {
 		$db = svdb::getInstance ();
 	
 		$query = "	SELECT
-        			u.status
-					FROM sv_news u
-        			WHERE id = " . $id . ";";
+        			n.status status
+					FROM sv_news n
+        			WHERE id = ?;";
 	
-		$result = $db->query ( $query );
+		$params = array();
+		$params[] = $id;
+		
+		$result = $db->query ($query,$params);
 	
 		$row = $result->fetchAssoc();
 			
@@ -350,15 +379,18 @@ class news {
 		$db = svdb::getInstance ();
 	
 		$query = "	SELECT
-        			u.position
-					FROM sv_news u
-        			WHERE id = " . $id . ";";
+        			n.position pos
+					FROM sv_news n
+        			WHERE id = ?;";
 	
-		$result = $db->query ( $query );
+		$params = array();
+		$params[] = $id;
+		
+		$result = $db->query ($query,$params);
 	
 		$row = $result->fetchAssoc();
 			
-		$position = $row['position'];
+		$position = $row['pos'];
 			
 		return $position;
 	
@@ -366,28 +398,14 @@ class news {
 	
 	public static function findArticleAbove ($ordering, $position) {
 		$db = svdb::getInstance ();
+
+		$query = "SELECT MAX(ordering) FROM sv_news WHERE ordering < ? AND position = ?;";
 		
-	/*	$query = "	SELECT
-        			u.id,
-					u.position,
-					u.ordering,
-					u.audience,
-					u.title,
-					u.text,
-					u.picture,
-					u.picture_position,
-					u.author_id,
-					u.status,
-					u.created_on,
-					u.last_modified
-					FROM sv_news u
-					WHERE u.position = " . $position . " u.ordering = (SELECT MIN(u1.ordering)
-										FROM sv_news u1
-										WHERE ordering > " . $ordering . " AND position = " . $position . ";";
-		*/
-		$query = "SELECT MAX(ordering) FROM sv_news WHERE ordering < " . $ordering . " AND position = " . $position . ";";
+		$params = array();
+		$params[] = $ordering;
+		$params[] = $position;
 		
-		$result = $db->query ( $query );
+		$result = $db->query ($query,$params);
 		
 		$row = $result->fetchAssoc();
 			
@@ -396,30 +414,16 @@ class news {
 		return $ordering;
 	}
 	
-	public function findArticleBelow ($ordering, $position) {
-			$db = svdb::getInstance ();
+	public static function findArticleBelow ($ordering, $position) {
+		$db = svdb::getInstance ();
 		
-	/*	$query = "	SELECT
-        			u.id,
-					u.position,
-					u.ordering,
-					u.audience,
-					u.title,
-					u.text,
-					u.picture,
-					u.picture_position,
-					u.author_id,
-					u.status,
-					u.created_on,
-					u.last_modified
-					FROM sv_news u
-					WHERE u.position = " . $position . " u.ordering = (SELECT MIN(u1.ordering)
-										FROM sv_news u1
-										WHERE ordering > " . $ordering . " AND position = " . $position . ";";
-		*/
-		$query = "SELECT MIN(ordering) FROM sv_news WHERE ordering > " . $ordering . " AND position = " . $position . ";";
+		$query = "SELECT MIN(ordering) FROM sv_news WHERE ordering > ? AND position = ?;";
 		
-		$result = $db->query ( $query );
+		$params = array();
+		$params[] = $ordering;
+		$params[] = $position;
+		
+		$result = $db->query ($query,$params);
 		
 		$row = $result->fetchAssoc();
 			
@@ -446,13 +450,17 @@ class news {
 					u.created_on,
 					u.last_modified
 					FROM sv_news u
-        			WHERE id = " . $id . ";";
+        			WHERE id = ?;";
+		
+		$params = array();
+		$params[] = $id;
+		
 		
 		$db->startTrans();
 		
 		try{
 			
-			$result = $db->query($query);
+			$result = $db->query ($query,$params);
 			
 			$row = $result->fetchAssoc();
 			
@@ -467,16 +475,24 @@ class news {
 			}
 			
 			$query2 = "	UPDATE sv_news
-	        			SET ordering = '" . $orderingOriginal . "'
-	        			WHERE ordering = " . $orderingNew . ";";
+	        			SET ordering = ?
+	        			WHERE ordering = ?;";
 			
-			$db->execSQLCmd($query2);
+			$params = array();
+			$params[] = $orderingOriginal;
+			$params[] = $orderingNew;
+			
+			$db->execSQLCmd($query2,$params);
 			
 			$query3 = "	UPDATE sv_news
-	        			SET ordering = '" . $orderingNew . "'
-	        			WHERE id = " . $id;
+	        			SET ordering = ?
+	        			WHERE id = ?;";
 			
-			$db->execSQLCmd($query3);
+			$params = array();
+			$params[] = $orderingNew;
+			$params[] = $id;
+			
+			$db->execSQLCmd($query3,$params);
 			
 			$db->commit();
 			
@@ -493,9 +509,12 @@ class news {
 		
 		$query = "	UPDATE sv_news
         			SET status = 'deleted'
-        			WHERE id = " . $id . ";";
+        			WHERE id = ?;";
 		
-		$db->execSQLCmd($query);
+		$params = array();
+		$params[] = $id;
+		
+		$db->execSQLCmd($query,$params);
 	}
 	
 	public static function toggleHide ($id) {
@@ -504,24 +523,30 @@ class news {
 		if (self::findStatus($id)== "active"){
 			$query = "	UPDATE sv_news
         			SET status = 'hidden'
-        			WHERE id = " . $id . ";";
+        			WHERE id = ?;";
 		} else {
 			$query = "	UPDATE sv_news
         			SET status = 'active'
-        			WHERE id = " . $id . ";";
+        			WHERE id = ?;";
 		}
 	
-		$db->execSQLCmd($query);
+		$params = array();
+		$params[] = $id;
+		
+		$db->execSQLCmd($query,$params);
 	}
 	
 	private static function ajustOrdering ($gap) {
 		$db = svdb::getInstance ();
 		
 		$query = "	UPDATE sv_news
-        			SET	ordering = ordering + 1,
-        			WHERE ordering > " . $gap . ";";
+        			SET	ordering = ordering - 1
+        			WHERE ordering > ?;";
 		
-		$db->execSQLCmd($query);
+		$params = array();
+		$params[] = $gap;
+		
+		$db->execSQLCmd($query,$params);
 	}
 	
 	public static function editArticle ($id,$position,$audience,$title = null,$text = null,$status) {
@@ -541,16 +566,26 @@ class news {
 		
 		$query = "	UPDATE sv_news
         			SET
-					position = " . $position . ",
-					ordering = " . $ordering . ",
-					audience = " . $audience . ",
-					title = '" . $title . "',
-					text = '" . $text . "',
-					status = '" . $status . "',
-					last_modified = '" . $last_modified . "'
-        			WHERE id = " . $id . ";";
+					position = ?,
+					ordering = ?,
+					audience = ?,
+					title = ?,
+					text = ?,
+					status = ?,
+					last_modified = ?
+        			WHERE id = ?;";
 		
-		$db->execSQLCmd($query);
+		$params = array();
+		$params[] = $position;
+		$params[] = $ordering;
+		$params[] = $audience;
+		$params[] = $title;
+		$params[] = $text;
+		$params[] = $status;
+		$params[] = $last_modified;
+		$params[] = $id;
+		
+		$db->execSQLCmd($query,$params);
 		
 		if ($oldpos != $position){
 				self::ajustOrdering($oldorder);

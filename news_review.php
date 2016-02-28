@@ -1,3 +1,4 @@
+<?php $page_name = pathinfo($_SERVER['PHP_SELF'],PATHINFO_FILENAME);?>
 <?php 
 require_once __DIR__ . '/top_all.php';
 ?>
@@ -15,6 +16,19 @@ require_once __DIR__ . '/top_all.php';
 				$('#articleAction').val (action);
 				$('#formArticleAction').submit();
 			}
+
+			function actionCall (action, id, position) {
+				var svc = new SV.Webservice ();
+				svc.url = "<?php echo config::url() . user::getLinkPath('news_actions');?>";
+				svc.type = 'POST';
+				svc.title = "News";
+				svc.successFunction = function (result, params) {$('#tab' + params.articlePosition).html(result.new_html);};
+				svc.addParam ('articleId', id);
+				svc.addParam ('articleAction', action);
+				svc.addParam ('articlePosition', position )
+				svc.callService();
+			}
+			
  		</script>       
     </head>
     <body>
@@ -28,7 +42,7 @@ require_once __DIR__ . '/top_all.php';
 			  <li><a data-toggle="tab" href="#tab<?php echo news::centerPosValue?>">Center</a></li>
 			  <li><a data-toggle="tab" href="#tab<?php echo news::rightPosValue?>">Right</a></li>
 			  <li><a data-toggle="tab" href="#tab<?php echo news::bottomPosValue?>">Bottom</a></li>
-			  <li class="pull-right"><a href="<?php echo config::url()?>/news_add.php">Add an Article</a></li>
+			  <li class="pull-right"><a href="<?php echo config::url(). user::getLinkPath('news_add')?>">Add an Article</a></li>
 			</ul>
 			
 			<div class="tab-content">
@@ -46,7 +60,7 @@ require_once __DIR__ . '/top_all.php';
 			  </div>
 			</div>
 			
-			<form action='<?php echo config::url(); ?>/actions/toggle_article_hide.php' method='post' id='formArticleAction'><input type='text' id='articleId' name='articleId' value='' hidden='hidden'><input type='text' id='articleAction' name='articleAction' value='' hidden='hidden'></form>
+			
 			
 		
 		</div>

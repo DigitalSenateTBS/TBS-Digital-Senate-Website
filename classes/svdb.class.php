@@ -1,9 +1,9 @@
 <?php
 final class svdb extends dbsql {
-	private static $server = 'localhost';
-	private static $user = 'sv';
-	private static $pwd = 'british123';
-	private static $schema = 'sv';
+	private static $server = '213.171.200.73';
+	private static $user = 'tbsvanguardadmin';
+	private static $pwd = 'Barra16!';
+	private static $schema = 'tbsvanguard';
 	private static $charset = 'utf8';
 	private static $db = null;
 	

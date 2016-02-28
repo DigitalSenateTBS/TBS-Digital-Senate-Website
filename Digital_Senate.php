@@ -1,3 +1,4 @@
+<?php $page_name = pathinfo($_SERVER['PHP_SELF'],PATHINFO_FILENAME);?>
 <?php require_once 'top_all.php';?>
 
 <!DOCTYPE HTML>

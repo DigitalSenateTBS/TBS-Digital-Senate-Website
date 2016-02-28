@@ -1,3 +1,4 @@
+<?php $page_name = pathinfo($_SERVER['PHP_SELF'],PATHINFO_FILENAME);?>
 <?php 
 require_once __DIR__ . '/top_all.php';
 ?>
@@ -42,7 +43,7 @@ require_once __DIR__ . '/top_all.php';
 			news::createArticle($position,$audience,$title,$content,$status);
 		}
 		
-		header("Location: ". config::url() . "/news_review.php");
+		header("Location: ". config::url() . user::getLinkPath('news_review'));
 	}
 ?>
 <!DOCTYPE HTML>
@@ -83,7 +84,7 @@ require_once __DIR__ . '/top_all.php';
 	    		</div>
 	    		
 				<div>
-					<a href="<?php echo config::url()?>/news_review.php" class="btn btn-danger">Cancel</a>
+					<a href="<?php echo config::url() . user::getLinkPath('news_review')?>" class="btn btn-danger">Cancel</a>
 					<button type="submit" class="btn btn-success pull-right">Submit</button>
 				</div>
 			</form>

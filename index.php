@@ -1,69 +1,55 @@
-﻿<?php 
-$loginpage = true;
-require_once __DIR__ . '/top_all.php';
-?>
+<?php $page_name = pathinfo($_SERVER['PHP_SELF'],PATHINFO_FILENAME);?>
+<?php require_once 'top_all.php';?>
 
-<?php
-	
-	$pwd = "";
-	$wrongPwd = false;
-	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-		$pwd = $_POST['pwd'];
-		
-		try {
-			$u = User::login ($pwd);
-			$_SESSION["sv_user"] = $u;
-			header("Location: ". config::url() . "/main.php");
-			exit ();
-		} catch (Exception $e) {
-			$wrongPwd = true;
-		}
-	}
-?>
+<!DOCTYPE HTML>
+<html>
+    <head>
+        
+        <?php require_once 'head_all.php';?>
+        
+    <style>
+        .jumbotron {
+            background-image: url(images/school.JPG);
+        }
+        
+    </style>
+        
+        <title><?php echo config::site_title() ?></title>
+    </head>
+    <body>
+        <?php include 'navigation_bar.php';?>
+   
+    <div class="jumbotron">
+      <div class="container">
+        <h1>The Student Vanguard</h1>
+        <p>A caring community, striving for excellence, where every individual matters.</p>
+          
+      </div>
+    </div> 
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<title>Login - <?php echo config::site_title() ?></title>
-<meta charset="utf-8">
-<link rel="icon" href="images/sv.ico" type="image/x-icon">
-<link rel="stylesheet" href="css/grid.css">
-<link rel="stylesheet" href="css/style.css">
-<link rel="stylesheet" href="css/booking.css" />
-<script src="js/jquery.js"></script>
-  
-</head>
-
-<body class="darkpage">
-	<div class="page">
-		<div class="container login_page">
-			<div class="brand">
-				<img src="images/svlogo.png" alt="" width="100px" />
-
-				<h1 class="brand_name">The Student Vanguard</h1>
-				<p class="brand_slogan">
-					The British School Rio de Janeiro <br> Barra Site
-				</p>
-			</div>
-
-			<form method='post' action='<?php echo $_SERVER['PHP_SELF'];?>' class="login-form booking-form">
-				<div class="tmInput<?php if($wrongPwd) { echo " invalid"; }?>">
-					<input id="pwd" name="pwd" placeHolder="Password" type="password"
-						data-constraints='@NotEmpty @Required @AlphaSpecial' autofocus>
-						<?php if($wrongPwd) { echo "<p class='invalid'>Invalid Password</p>"; }?>
-				</div>
-				<div class="booking-form_controls">
-					<a class="btn" onclick="$('form').submit();">Login</a>
-				</div>
-			</form>
-		</div>
+    <div class="learn-more">
+	  <div class="container">
+		<div class="row">
+	  	  <div class="col-md-4">
+			<h3>News</h3>
+			<p>See what is currently going on at TBS</p>
+			<p><a href="<?php echo config::url()  . user::getLinkPath('news')?>">News</a></p>
+		  </div>
+		  <div class="col-md-4">
+			<h3>The Digital Senate</h3>
+			<p>Learn more about the digital uprising here at TBS!</p>
+			<p><a href="<?php echo config::url() . user::getLinkPath('digital_senate')?>">Digital Senate</a></p>
+	      </div>
+		  <div class="col-md-4">
+              <h3>Contacts</h3>
+			<p>Find teacher`s emails!</p>
+			<p><a href="<?php echo config::url()  . user::getLinkPath('contact_us')?>">See More</a></p>
+		  </div>
+	    </div>
+	  </div>
 	</div>
-	<!-- 
-	<?php
-	//if ($wrongPwd) { ?>
-		<script>alert ('Invalid password');</script>
-	<?php
-	//}?>
-	 -->
-</body>
+        
+    <?php include 'footer.php';?>
+        
+  </body>
 </html>

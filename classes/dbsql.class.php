@@ -63,6 +63,22 @@ class dbsql {
 	 * @throws DbSqlException
 	 */
 	public function query($query, $params = null) {
+		
+		if (!is_string($query)){
+			throw new Exception('Invalid Query');
+		}
+		if ($params != null){
+			foreach ($params as $key => $val){
+				$safeParam = $this->treatParam ($val);
+				$needle = "?";
+				$pos = strpos($query, $needle);
+				if ($pos !== false) {
+				    $query = substr_replace($query, $safeParam, $pos, strlen($needle));
+				}
+				
+			}
+		}
+
 		$result = $this->con->query ( $query );
 		if ($this->con->errno) {
 			$msg = $this->formatError ();
@@ -71,8 +87,8 @@ class dbsql {
 		}
 		return new DbSqlResult ( $result );
 	}
-	public function execSQLCmd($cmd) {
-		$this->query ( $cmd );
+	public function execSQLCmd($cmd,$params = null) {
+		$this->query ($cmd,$params);
 	}
 	public function lastId() {
 		return mysqli_insert_id ( $this->con );
@@ -91,6 +107,19 @@ class dbsql {
 		
 		return $maxvalue;
 	}
+	
+	public function numRecords($tableName) {
+		$query = "SELECT COUNT(*) FROM " . $tableName . ";";
+	
+		$result = $this->query ( $query );
+	
+		$row = $result->fetchAssoc ();
+	
+		$numrecords = $row ['COUNT(*)'];
+	
+		return $numrecords;
+	}
+	
 	public function startTrans() {
 		if (! $this->numTrans) {
 			
@@ -129,6 +158,51 @@ class dbsql {
 				$this->execSQLCmd ( "rollback to savepoint t" . ( string ) ($this->numTrans) );
 			}
 		}
+	}
+	
+	public function treatParam ($value){
+		
+		// null values
+		if (is_null ($value)) {
+			return 'NULL';
+		}
+		
+		//boolean values
+		if (is_bool ($value)) {
+			if ($value) {
+				return '1';
+			} else {
+				return '0';
+			}
+		} 
+		
+		// string and numeric values
+		if (is_string($value) || is_numeric($value)){
+			return "'" . mysqli_real_escape_string($this->con,$value) . "'";
+		}
+		
+		//array values
+		if (is_array($value)){
+			$arrayValue = "(";
+			$i = 0;
+			foreach ($value as $key => $val) {
+				if ($i != 0){
+					$arrayValue .= ',';
+				}
+				$i++;
+				$arrayValue .= treatParam ($val);
+			}
+			$arrayValue .= ')';
+			return $arrayValue;
+		}
+		
+		//datetime values
+		if (is_object($value) && $value instanceof DateTime){
+			return $value ->format( 'Y-m-d H:i:s' );
+		}
+		
+		throw new Exception('Param not treated');
+		
 	}
 	
 	/*
@@ -362,6 +436,7 @@ class DbSqlResult {
 	 * @var msqli_result
 	 */
 	private $result;
+	
 	public function __construct($result) {
 		$this->result = $result;
 	}

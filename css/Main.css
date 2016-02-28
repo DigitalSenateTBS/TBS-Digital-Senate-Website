@@ -305,3 +305,14 @@ td {
 .article-review-container-hidden{
 	background-color: rgba(245, 245, 245, 0);
 }
+
+.button-glyphicon {
+-webkit-appearance: none;
+outline: none;
+border: 0;
+background: transparent;
+}
+
+.action-link {
+	cursor:pointer;
+}

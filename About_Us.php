@@ -1,3 +1,5 @@
+<?php $page_name = pathinfo($_SERVER['PHP_SELF'],PATHINFO_FILENAME);?>
+<?php $page_permission = 2?>
 <?php require_once 'top_all.php';?>
 
 <!DOCTYPE HTML>

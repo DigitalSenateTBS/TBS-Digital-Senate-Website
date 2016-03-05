@@ -11,6 +11,17 @@
         .jumbotron {
             background-image: url('images/school.JPG');
         }
+        .title {
+            font-size: 8;
+            font-family:'Shift', sans-serif; 
+            color: darkblue;
+            margin-left: 50px; 
+}
+        P {
+            margin-left:20px;
+            font-family:'Shift',sans-serif;
+            font-size:15px;
+        }
     </style>
         <title>Digital Senate - <?php echo config::site_title() ?></title>
     </head>
@@ -25,7 +36,7 @@
             <p>Check out the digital uprising taking place in our school!</p>
           </div>
         </div>
-       <font size="8" color="blue">Who Are We:</font> <br>
+       <h1 class="title"><b>Who Are We</b></h1> <br>
         <P> We are a technological communiy within the school created to help with the technology we have now.<br> </P>
         
     <?php include 'footer.php';?>

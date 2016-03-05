@@ -17,11 +17,11 @@
             color: darkblue;
             margin-left: 50px; 
 }
-        P {
+        .info {
             margin-left:20px;
             font-family:'Shift',sans-serif;
             font-size:15px;
-        }
+}
     </style>
         <title>Digital Senate - <?php echo config::site_title() ?></title>
     </head>
@@ -37,7 +37,11 @@
           </div>
         </div>
        <h1 class="title"><b>Who Are We</b></h1> <br>
-        <P> We are a technological communiy within the school created to help with the technology we have now.<br> </P>
+        <P class="info"> We are a technological communiy within the school created to help with the technology we have now.<br> </P>
+        <!--Place holder for photo-->
+        <div id="photo">
+        photo
+        </div>
         
     <?php include 'footer.php';?>
         

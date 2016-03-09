@@ -18,7 +18,7 @@
             margin-left: 50px; 
 }
         .info {
-            margin-left:20px;
+            margin-left:50px;
             font-family:'Shift',sans-serif;
             font-size:15px;
 }

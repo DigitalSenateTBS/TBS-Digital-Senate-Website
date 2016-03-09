@@ -11,6 +11,7 @@ class User {
 	private $username = null;
 	private $status = null;
 	private $profile_id = null;
+	private $site = null;
 	private static $db = null;
 	
 	/**
@@ -128,6 +129,9 @@ class User {
 		if (isset ( $row ['profile_id'] )) {
 			$this->setProfileId ( $row ["profile_id"] );
 		}
+		if (isset ( $row ['site'] )) {
+			$this->setSite( $row ["site"] );
+		}
 	}
 	
 	/**
@@ -143,7 +147,7 @@ class User {
 		$db = svdb::getInstance ();
 		
 		// query
-		$query = "select u.id, u.username, u.name, u.profile_id, u.status
+		$query = "select u.id, u.username, u.name, u.profile_id, u.status, u.site
 					from sv_users u";
 		
 		if (! is_null ( $where )) {
@@ -262,6 +266,28 @@ class User {
 		$this->profile_id = $profile_id;
 	}
 	
+	/**
+	 *
+	 * Return user site
+	 *
+	 * @return integer
+	 *
+	 */
+	public function getSite() {
+		return $this->site;
+	}
+	
+	/**
+	 *
+	 * Set user site
+	 *
+	 * @param integer $status
+	 *
+	 */
+	public function setSite($site) {
+		$this->site = $site;
+	}
+	
 	public static function checkPermission ($profile_id,$permission) {		
 		if ($permission == 0){
 			return true;
@@ -360,5 +386,31 @@ class User {
 		
 		return $row['path'];
 	
+	}
+	
+	public static function togglePermission ($permission,$profile) {
+		$db = svdb::getInstance ();
+		
+		$new_permission = null;
+				
+		if (self::checkPermission($profile, $permission)){
+			$query = "	UPDATE sv_profiles_permissions p
+        			SET p.allow = 0
+        			WHERE p.profile_id = ? AND p.permission_id = ?;";
+			$new_permission = false;
+		} else {
+			$query = "	UPDATE sv_profiles_permissions p
+        			SET p.allow = 1
+        			WHERE p.profile_id = ? AND p.permission_id = ?;";
+			$new_permission = true;
+		}
+	
+		$params = array();
+		$params[] = $profile;
+		$params[] = $permission;
+	
+		$db->execSQLCmd($query,$params);
+		
+		return $new_permission;
 	}
 }

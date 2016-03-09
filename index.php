@@ -14,14 +14,14 @@
         
     </style>
         
-        <title><?php echo config::site_title() ?></title>
+        <title>The <?php echo config::site_title() ?></title>
     </head>
     <body>
         <?php include 'navigation_bar.php';?>
    
     <div class="jumbotron">
       <div class="container">
-        <h1>The Student Vanguard</h1>
+        <h1>The <?php echo config::site_title() ?></h1>
         <p>A caring community, striving for excellence, where every individual matters.</p>
           
       </div>

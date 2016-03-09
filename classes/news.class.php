@@ -10,16 +10,21 @@ class news {
 	private $audience = NULL;
 	private $title = NULL;
 	private $text = NULL;
-	private $picture = NULL;
-	private $picture_position = NULL;
 	private $status = "active";
 	private $author = NULL;	
 	private $created_on = NULL;
 	private $ordering = NULL;
 	private $position = self::centerPosValue;
 	private $last_modified = NULL;
+	private $site = NULL; //$_SESSION['sv_user']->getSite();
 	
-	
+	/**
+	 * 
+	 * Creates a query that returns all active articles from requested position.
+	 * 
+	 * @param integer $position
+	 * @return DbSqlResult
+	 */
 	public static function getActiveArticles($position) {
 		$db = svdb::getInstance ();
 		
@@ -28,25 +33,30 @@ class news {
 					u.audience,
 					u.title,
 					u.text,
-					u.picture,
-					u.picture_position,
 					u.author_id,
 					u.status,
 					u.created_on,
 					u.last_modified
 					FROM sv_news u
-        			WHERE position = ? AND status = ?
+        			WHERE position = ? AND status = ? AND site = ?
         			ORDER BY ordering ASC;";
 		
 		$params = array();
 		$params[] = $position;
 		$params[] = 'active';
+		$params[] = $_SESSION['sv_user']->getSite();		
 		
 		$result = $db->query($query,$params);
 		
 		return $result;
 	}
-	
+	/**
+	 * 
+	 * Processes active articles from requested position and displays them on the page.
+	 * 
+	 * 
+	 * @param integer $position
+	 */
 	public static function processArticles($position){
 		$result = news::getActiveArticles($position);
 			
@@ -57,14 +67,20 @@ class news {
 		
 			$title = $row['title'];
 			$text = $row ['text'];
-		
+			
 			echo"<div class='daily_bulletin_article'>";
 			echo "<h4>" . $title . "</h4>";
 			echo "<p>" . $text . "</p>";
 			echo"</div>";
 		}
 	}
-	
+	/**
+	 * 
+	 * Creates a query that returns active and hidden articles from requested position.
+	 * 
+	 * @param integer $position
+	 * @return DbSqlResult
+	 */
 	private static function getAllArticles($position) {
 		$db = svdb::getInstance ();
 		
@@ -73,40 +89,56 @@ class news {
 					u.audience,
 					u.title,
 					u.text,
-					u.picture,
-					u.picture_position,
 					u.author_id,
 					u.status,
 					u.created_on,
 					u.last_modified
 					FROM sv_news u
-        			WHERE position = ? AND (status = ? OR status = ?)
+        			WHERE position = ? AND (status = ? OR status = ?) AND site = ?
         			ORDER BY ordering ASC;";
 		
 		$params = array();
 		$params[] = $position;
 		$params[] = 'active';
 		$params[] = 'hidden';
+		$params[] = $_SESSION['sv_user']->getSite();
 		
 		$result = $db->query($query,$params);
 		
 		return $result;
 	}
 	
-	public static function createArticle($position, $audience, $title = null, $text = null, $status = "active") {
+	/**
+	 * 
+	 * Creates a new article in the database with recieved parameters.
+	 * 
+	 * 
+	 * @param integer $position
+	 * @param integer $audience
+	 * @param string $title
+	 * @param string $text
+	 * @param string $status
+	 * @param string $site
+	 */
+	public static function createArticle($position, $audience, $title = null, $text = null, $status = "active",$site = null) {
+		//TODO Make audience functional
+		
 		$db = svdb::getInstance ();
 		
 		$ordering = ($db->maxValue ( "ordering", "sv_news" )) + 1;
 		// $audience=
 		// $title=
 		// $text=
-		$author_id = 1;
+		$author_id = $_SESSION['sv_user']->getId();
 		// $status=
+		if ($site == null){
+			$site = $_SESSION['sv_user']->getSite();
+		}
 		$now = new DateTime ();
 		$nowStr = $now->format ( 'Y-m-d H:i:s' );
 		
-		$cmd = "	INSERT INTO sv_news (position,ordering,audience,title,text,author_id,status,created_on,last_modified) values
-					(?,?,?,?,?,?,?,?,?)";
+		$cmd = "	INSERT INTO sv_news (position,ordering,audience,title,text,author_id,status,created_on,last_modified,site) values
+					(?,?,?,?,?,?,?,?,?,?);";
 		
 		$params = array();
 		$params[] = $position;
@@ -118,11 +150,18 @@ class news {
 		$params[] = $status;
 		$params[] = $nowStr;
 		$params[] = $nowStr;
-		
+		$params[] = $site;		
 		
 		$db->execSQLCmd ($cmd,$params);
 	}
 	
+	/**
+	 * 
+	 * Returns HTML code for a table to make changes to the database for the recieved position.
+	 * 
+	 * @param integer $position
+	 * @return string
+	 */
 	public static function reviewArticlesTable ($position) {
 		$tablestring = "";
 		
@@ -141,6 +180,10 @@ class news {
 			$text = $row ['text'];
 			$status = $row ['status'];
 			
+			if ($title == ""){
+				$title = "*NO TITLE*";
+			}
+			
 			if ($status == "hidden"){
 				$statuscircle = "glyphicon-eye-open";
 				$statusclass = " style='background-color: rgba(245, 245, 245, 0);'";
@@ -156,12 +199,18 @@ class news {
 				        					<a data-toggle='collapse' data-parent='#accordion" . $position . "' href='#" . $id . "'>";
 				$tablestring .= $title;
 				$tablestring .= "		</a>
-								<span class='pull-right'>
-								<a onclick=\"actionCall('moveUp', " . $id . "," . $position . ");\" title='Move up'><span class='glyphicon glyphicon-arrow-up action-link'></span></a>
-								<a onclick=\"actionCall('moveDown', " . $id . "," . $position . ");\" title='Move down'><span class='glyphicon glyphicon-arrow-down action-link'></span></a>
+								<span class='pull-right'>";
+				
+								if ($previousid == null){
+									$tablestring .= "<a title='Move up'><span class='glyphicon glyphicon-arrow-up disabled-link'></span></a>";
+								} else {
+									$tablestring .= "<a onclick=\"actionCall('moveUp', " . $id . "," . $position . ");\" title='Move up'><span class='glyphicon glyphicon-arrow-up action-link'></span></a>";
+								}
+									
+				$tablestring .=	"<a onclick=\"actionCall('moveDown', " . $id . "," . $position . ");\" title='Move down'><span class='glyphicon glyphicon-arrow-down action-link'></span></a>
 								<a href=' ". config::url() . user::getLinkPath('news_add') . "?id=" . $id . "' title='Edit'><span class='glyphicon glyphicon-pencil action-link'></span></a>
 								<a onclick=\"actionCall('toggleHide', " . $id . "," . $position . ");\" title='" . $statustitle . "'><span class='glyphicon " . $statuscircle . " action-link'></span></a>
-								<a onclick=\"actionCall('delete', " . $id . "," . $position . ");\" title='Delete'><span class='glyphicon glyphicon-remove-circle action-link'></span></a>
+								<a onclick=\"confirmDelete(" . $id . "," . $position . ");\" title='Delete'><span class='glyphicon glyphicon-remove action-link'></span></a>
 								</span>
 								</h4>
 				    		</div>
@@ -182,6 +231,14 @@ class news {
 			return $tablestring;
 	}
 	
+	
+	/**
+	 * 
+	 * Finds the article with the given id, then creates an object with its values.
+	 * 
+	 * @param integer $id
+	 * @return news
+	 */
 	public static function readArticle ($id) {
 		$db = svdb::getInstance ();
 		
@@ -192,12 +249,11 @@ class news {
 					u.audience,
 					u.title,
 					u.text,
-					u.picture,
-					u.picture_position,
 					u.author_id,
 					u.status,
 					u.created_on,
-					u.last_modified
+					u.last_modified,
+					u.site
 					FROM sv_news u
         			WHERE id = ?;";
 		
@@ -221,11 +277,7 @@ class news {
 		$article->setTitle($row['title']);
 		
 		$article->setText($row['text']);
-		
-		$article->setPicture($row['picture']);
-		
-		$article->setPicturePosition($row['picture_position']);
-		
+				
 		$article->setStatus($row['status']);
 		
 		$article->setAuthor($row['author_id']);
@@ -234,103 +286,218 @@ class news {
 		
 		$article->setLastModified($row['last_modified']);
 		
+		$article->setSite($row['site']);
+		
 		return $article;
 	}
 	
+	/**
+	 * 
+	 * Sets the current object`s id
+	 * 
+	 * @param integer $id
+	 */
 	public function setId ($id) {
 		$this->id = $id;
 	}
 	
+	/**
+	 * 
+	 * Returns current object`s id
+	 * 
+	 */
 	public function getId () {
 		return $this->id;
 	}
 	
+	/**
+	 *
+	 * Sets the current object`s audience
+	 *
+	 * @param integer $audience
+	 */
 	public function setAudience ($audience) {
 		$this->audience = $audience;
 	}
 	
+	/**
+	 *
+	 * Returns current object`s audience
+	 *
+	 */
 	public function getAudience () {
 		return $this->audience;
 	}
-	
+
+	/**
+	 *
+	 * Sets the current object`s position
+	 *
+	 * @param integer $position
+	 */
 	public function setPosition ($position) {
 		$this->position = $position;
 	}
-	
+
+	/**
+	 *
+	 * Returns current object`s position
+	 *
+	 */
 	public function getPosition () {
 		return $this->position;
 	}
-	
+
+	/**
+	 *
+	 * Sets the current object`s ordering
+	 *
+	 * @param integer $ordering
+	 */
 	public function setOrdering ($ordering) {
 		$this->ordering = $ordering;
 	}
-	
+
+	/**
+	 *
+	 * Returns current object`s ordering
+	 *
+	 */
 	public function getOrdering () {
 		return $this->ordering;
 	}
-	
+
+	/**
+	 *
+	 * Sets the current object`s title
+	 *
+	 * @param string $title
+	 */
 	public function setTitle ($title) {
 		$this->title = $title;
 	}
-	
+
+	/**
+	 *
+	 * Returns current object`s title
+	 *
+	 */
 	public function getTitle () {
 		return $this->title;
 	}
-	
+
+	/**
+	 *
+	 * Sets the current object`s text
+	 *
+	 * @param string $text
+	 */
 	public function setText ($text) {
 		$this->text = $text;
 	}
-	
+
+	/**
+	 *
+	 * Returns current object`s text
+	 *
+	 */
 	public function getText () {
 		return $this->text;
 	}
-	
+
+	/**
+	 *
+	 * Sets the current object`s created_on date
+	 *
+	 * @param datetime $created_on
+	 */
 	public function setCreatedOn ($created_on) {
 		$this->created_on = $created_on;
 	}
 	
+	/**
+	 *
+	 * Returns current object`s created on date
+	 *
+	 */
 	public function getCreatedOn () {
 		return $this->created_on;
 	}
-	
+
+	/**
+	 *
+	 * Sets the current object`s status
+	 *
+	 * @param string $status
+	 */
 	public function setStatus ($status) {
 		$this->status = $status;
 	}
-	
+
+	/**
+	 *
+	 * Returns current object`s status
+	 *
+	 */
 	public function getStatus () {
 		return $this->status;
 	}
-	
+
+	/**
+	 *
+	 * Sets the current object`s author
+	 *
+	 * @param integer $author
+	 */
 	public function setAuthor ($author) {
 		$this->author = $author;
 	}
-	
+
+	/**
+	 *
+	 * Returns current object`s author
+	 *
+	 */
 	public function getAuthor () {
 		return $this->author;
 	}
-	
+
+	/**
+	 *
+	 * Sets the current object`s last modified date
+	 *
+	 * @param integer $lastmodified
+	 */
 	public function setLastModified ($lastmodified) {
 		$this->lastmodified = $lastmodified;
 	}
-	
+
+	/**
+	 *
+	 * Returns current object`s last modified date
+	 *
+	 */
 	public function getLastModified () {
 		return $this->lastmodified;
 	}
 	
-	public function setPicture ($picture) {
-		$this->picture = $picture;
+	/**
+	 *
+	 * Sets the current object`s site
+	 *
+	 * @param string $site
+	 */
+	public function setSite ($site) {
+		$this->site= $site;
 	}
-	
-	public function getPicture () {
-		return $this->picture;
-	}
-	
-	public function setPicturePosition ($picture_position) {
-		$this->picture_position = $picture_position;
-	}
-	
-	public function getPicturePosition () {
-		return $this->picture_position;
+
+	/**
+	 *
+	 * Returns current object`s site
+	 *
+	 */
+	public function getSite () {
+		return $this->site;
 	}
 	
 	public static function findOrdering ($id) {
@@ -443,8 +610,6 @@ class news {
 					u.audience,
 					u.title,
 					u.text,
-					u.picture,
-					u.picture_position,
 					u.author_id,
 					u.status,
 					u.created_on,

@@ -11,12 +11,6 @@ require_once __DIR__ . '/top_all.php';
         
         <title>Review News - <?php echo config::site_title() ?></title>
  		<script>
-			function buttonClick (action, id) {
-				$('#articleId').val(id);
-				$('#articleAction').val (action);
-				$('#formArticleAction').submit();
-			}
-
 			function actionCall (action, id, position) {
 				var svc = new SV.Webservice ();
 				svc.url = "<?php echo config::url() . user::getLinkPath('news_actions');?>";
@@ -27,6 +21,11 @@ require_once __DIR__ . '/top_all.php';
 				svc.addParam ('articleAction', action);
 				svc.addParam ('articlePosition', position )
 				svc.callService();
+			}
+
+			function confirmDelete (id,position){
+				var ok_function = "actionCall('delete'," + id + "," + position + ");";
+				warningModal("Warning","Are you sure you want to delete?", ok_function,"Delete");
 			}
 			
  		</script>       
@@ -59,9 +58,6 @@ require_once __DIR__ . '/top_all.php';
 			    <?php echo news::reviewArticlesTable(news::bottomPosValue); ?>
 			  </div>
 			</div>
-			
-			
-			
 		
 		</div>
 			  

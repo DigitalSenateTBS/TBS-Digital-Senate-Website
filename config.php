@@ -17,7 +17,7 @@ class config {
 		}
 			
 		public static function site_title () {
-			return "Student Vanguard";
+			return "TBS Vanguard";
 		}
 		
 		public static function debug_mode () {

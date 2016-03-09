@@ -9,7 +9,7 @@
         
     <style>
         .jumbotron {
-            background-image:url('images/school.JPG');
+            background-image:url('images/contacts.JPG');
         }
     </style>
         <title>Contacts - <?php echo config::site_title() ?></title>
@@ -43,7 +43,7 @@
                       </th>
                 </tr>
               <?php 
-              
+              	//TODO Be able to order results
               	$db = svdb::getInstance();
               	
               	$query = "SELECT u.name, u.subject, u.email
@@ -61,9 +61,13 @@
     				$email = $row ['email'];
     				
     				echo"<tr>";
-            			echo "<td>" . $name . "</td>";
-            			echo "<td>" . $subject . "</td>";
-            			echo "<td> <a href:'mailto:" . $email . "'>" . $email . "</td>";
+            		echo "<td>" . $name . "</td>";
+            		echo "<td>" . $subject . "</td>";
+	    			if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+							echo "<td><a href='mailto:" . $email . "'>" . $email . "</a></td>";
+					} else {
+							echo "<td>" . $email . "</td>";
+					}
             		echo"</tr>";
     			}
               		

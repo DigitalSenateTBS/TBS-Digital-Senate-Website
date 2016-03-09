@@ -43,7 +43,7 @@ require_once __DIR__ . '/top_all.php';
 			<div class="brand">
 				<img src="images/svlogo.png" alt="" width="100px" />
 
-				<h1 class="brand_name">The Student Vanguard</h1>
+				<h1 class="brand_name">The <?php echo config::site_title() ?></h1>
 				<p class="brand_slogan">
 					The British School Rio de Janeiro <br> Barra Site
 				</p>

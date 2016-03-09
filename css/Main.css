@@ -316,3 +316,11 @@ background: transparent;
 .action-link {
 	cursor:pointer;
 }
+
+.table-borderless td, .table-borderless th {
+    border: none;
+}
+
+.disabled-link { 
+	cursor:not-allowed;
+}

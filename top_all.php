@@ -9,9 +9,7 @@
 			header("Location: ". config::url() . user::getLinkPath('login'));
 			exit();
 		}
-		
-		//echo $_SESSION['sv_user']->getUsername() . "<br>";
-		
+				
 		if (! user::checkPermissionByPage($page_name, $_SESSION['sv_user']->getProfileId())) {
 			exit();
 		}

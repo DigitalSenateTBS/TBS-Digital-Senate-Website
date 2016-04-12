@@ -178,10 +178,33 @@ td {
     text-align: center;
 }
 
+.daily_bulletin_article img.top  {
+	margin: auto;
+	max-width: 100%;
+}
+
+.daily_bulletin_article img.left  {
+	float:left;
+	max-width: 10%;
+}
+
+.daily_bulletin_article img.right  {
+	float:right;
+	max-width: 10%;
+}
+
+.daily_bulletin_article img.bottom  {
+	margin: auto;
+	max-width: 100%;
+	
+}
+
 .daily_bulletin_article {
     background-color: #F2F2F2;
     margin: 1px 1px 1px 1px;
     padding: 1px 1px 1px 1px;
+    text-align: center;
+    overflow: auto;
 }
 
 .align-center {
@@ -322,5 +345,31 @@ background: transparent;
 }
 
 .disabled-link { 
+	color: #8c8c8c;
 	cursor:not-allowed;
 }
+
+.survey-frame {
+    width: 100%;
+    max-width: 1000px;
+    height: 2736px;
+}
+
+/* settings only for survey  
+
+.smcx-embed {
+    height: 2667px;
+}
+
+.smcx-embed>.smcx-iframe-container {
+    height: 2665px;
+}
+
+/* .smcx-iframe-container {
+    height: 100%;
+    overflow: hidden;
+} 
+
+.smcx iframe {
+	    height: 3027px;
+} */

@@ -209,9 +209,13 @@ require_once __DIR__ . '/top_all.php';
     			$db = svdb::getInstance();
     			 
     			$query = "SELECT tc.id, tc.name, tc.subject, tc.email
-						 FROM sv_teachers_contacts tc ;";
+						  FROM sv_teachers_contacts tc
+						  WHERE site = ?;";
     			 
-    			$result = $db->query($query);
+    			$params = array();
+              	$params[] = $_SESSION['sv_user']->getSite();
+    			
+    			$result = $db->query($query,$params);
     			
     			$num = $result->numRows();
     			 

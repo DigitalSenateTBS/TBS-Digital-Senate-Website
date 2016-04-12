@@ -13,15 +13,20 @@ class config {
 		}
 			
 		public static function url () {
-			return "http://localhost/sv";
+			return "http://tbsvanguard.com";
 		}
 			
 		public static function site_title () {
 			return "TBS Vanguard";
 		}
 		
+		public static function contact_email () {
+			$contact_email = "digitalsenatebarra@britishschool.g12.br";
+			return "<a href='mailto:" . $contact_email . "' >" . $contact_email . "</a>";
+		}
+		
 		public static function debug_mode () {
-			return true;
+			return false;
 		}
 	
 }

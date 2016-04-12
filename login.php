@@ -10,14 +10,18 @@ require_once __DIR__ . '/top_all.php';
 	
 	$pwd = "";
 	$wrongPwd = false;
+	$no_connection = false;
+	
 	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$pwd = $_POST['pwd'];
 		
 		try {
 			$u = User::login ($pwd);
 			$_SESSION["sv_user"] = $u;
-			header("Location: ". config::url() . "/");
+			header("Location: ". config::url() . user::HomePageLink() );
 			exit ();
+		} catch (DbSqlException $e) {
+			$no_connection = true;
 		} catch (Exception $e) {
 			$wrongPwd = true;
 		}
@@ -49,11 +53,14 @@ require_once __DIR__ . '/top_all.php';
 				</p>
 			</div>
 
-			<form method='post' action='<?php echo $_SERVER['PHP_SELF'];?>' class="login-form booking-form">
-				<div class="tmInput<?php if($wrongPwd) { echo " invalid"; }?>">
+			<form method='post' action='<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>' class="login-form booking-form">
+				<div class="tmInput<?php if($wrongPwd || $no_connection) { echo " invalid"; }?>">
 					<input id="pwd" name="pwd" placeHolder="Password" type="password"
 						data-constraints='@NotEmpty @Required @AlphaSpecial' autofocus>
-						<?php if($wrongPwd) { echo "<p class='invalid'> <strong> Invalid Password </strong> </p>"; }?>
+						<?php 
+							if($wrongPwd) { echo "<p class='invalid'> <strong> Invalid Password </strong> </p>"; }
+							if($no_connection) { echo "<p class='invalid'> <strong> Error Connecting to Server </strong> </p>"; }
+						?>
 				</div>
 				<div class="booking-form_controls">
 					<a class="btn" onclick="$('form').submit();">Login</a>

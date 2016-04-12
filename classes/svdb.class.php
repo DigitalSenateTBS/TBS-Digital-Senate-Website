@@ -16,7 +16,12 @@ final class svdb extends dbsql {
 			return self::$db;
 		}
 		
-		self::$db = new svdb ( self::$user, self::$pwd, self::$server, self::$schema, self::$charset, config::debug_mode () );
+		try {
+			self::$db = new svdb ( self::$user, self::$pwd, self::$server, self::$schema, self::$charset, config::debug_mode () );
+		} catch (Exception $e) {
+			throw new DbSqlException('Could not connect to server');
+		}		
+		
 		return self::$db;
 	}
 }

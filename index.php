@@ -9,7 +9,7 @@
         
     <style>
         .jumbotron {
-            background-image: url(images/school.JPG);
+            background-image: url(images/school.jpg);
         }
         
     </style>

@@ -7,7 +7,7 @@ class news {
 	const bottomPosValue = 4;
 	
 	private $id = NULL;
-	private $audience = 127;
+	private $audience = NULL;
 	private $title = NULL;
 	private $text = NULL;
 	private $status = "active";
@@ -172,9 +172,9 @@ class news {
 		$num = $result->numRows();
 		
 		$previousid = null;
-		$i = 1;
 		
 		while ($row = $result->fetchAssoc()){
+		//TODO Deal with the case of the first and last article as their links need to be disabled.
 			$id = $row ['id'];
 			$title = $row['title'];
 			$text = $row ['text'];
@@ -206,14 +206,9 @@ class news {
 								} else {
 									$tablestring .= "<a onclick=\"actionCall('moveUp', " . $id . "," . $position . ");\" title='Move up'><span class='glyphicon glyphicon-arrow-up action-link'></span></a>";
 								}
-								
-								if ($i == $num) {
-									$tablestring .=	"<a title='Move down'><span class='glyphicon glyphicon-arrow-down disabled-link'></span></a>";
-								} else {
-									$tablestring .=	"<a onclick=\"actionCall('moveDown', " . $id . "," . $position . ");\" title='Move down'><span class='glyphicon glyphicon-arrow-down action-link'></span></a>";
-								}
-								
-				$tablestring .=	"<a href=' ". config::url() . user::getLinkPath('news_add') . "?id=" . $id . "' title='Edit'><span class='glyphicon glyphicon-pencil action-link'></span></a>
+									
+				$tablestring .=	"<a onclick=\"actionCall('moveDown', " . $id . "," . $position . ");\" title='Move down'><span class='glyphicon glyphicon-arrow-down action-link'></span></a>
+								<a href=' ". config::url() . user::getLinkPath('news_add') . "?id=" . $id . "' title='Edit'><span class='glyphicon glyphicon-pencil action-link'></span></a>
 								<a onclick=\"actionCall('toggleHide', " . $id . "," . $position . ");\" title='" . $statustitle . "'><span class='glyphicon " . $statuscircle . " action-link'></span></a>
 								<a onclick=\"confirmDelete(" . $id . "," . $position . ");\" title='Delete'><span class='glyphicon glyphicon-remove action-link'></span></a>
 								</span>
@@ -228,7 +223,6 @@ class news {
 								";
 				
 				$previousid = $id;
-				$i++;
 			
 		}
 		
@@ -608,19 +602,39 @@ class news {
 	
 	public static function moveArticle ($id,$direction) {
 		$db = svdb::getInstance ();
-				
+		
+		$query = "	SELECT
+        			u.id,
+					u.position,
+					u.ordering,
+					u.audience,
+					u.title,
+					u.text,
+					u.author_id,
+					u.status,
+					u.created_on,
+					u.last_modified
+					FROM sv_news u
+        			WHERE id = ?;";
+		
+		$params = array();
+		$params[] = $id;
+		
+		
 		$db->startTrans();
 		
 		try{
 			
-			$orderingOriginal = self::findOrdering($id);
+			$result = $db->query ($query,$params);
 			
-			$position = self::findPosition($id);
+			$row = $result->fetchAssoc();
+			
+			$orderingOriginal = $row['ordering'];
 			
 			if ($direction == "up"){
-				$orderingNew = self::findArticleAbove($orderingOriginal, $position);
+				$orderingNew = self::findArticleAbove($orderingOriginal, $row['position']);
 			} else if ($direction == "down"){
-				$orderingNew = self::findArticleBelow($orderingOriginal, $position);
+				$orderingNew = self::findArticleBelow($orderingOriginal, $row['position']);
 			} else{
 				throw new Exception ('No direction given');
 			}

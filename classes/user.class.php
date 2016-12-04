@@ -57,8 +57,7 @@ class User {
 		$db = svdb::getInstance ();
 		
 		$query = "select u.username, u.pwd
-					from sv_users u
-					where status = 1";
+					from sv_users u";
 		
 		$result = $db->query ($query);
 		
@@ -134,49 +133,6 @@ class User {
 			$this->setSite( $row ["site"] );
 		}
 	}
-	
-	public static function changePassword ($id,$new_pwd){
-		$db = svdb::getInstance ();
-		
-		$query = "	UPDATE sv_users u
-	        		SET pwd = ?
-	        		WHERE id = ?;";
-			
-		$params = array();
-		$params[] = password_hash($new_pwd, PASSWORD_DEFAULT);
-		$params[] = $id;
-		
-		$db->execSQLCmd($query,$params);
-	}
-	
-	public static function changeUsername ($id,$new_username){
-		$db = svdb::getInstance ();
-	
-		$query = "	UPDATE sv_users u
-	        		SET username = ?
-	        		WHERE id = ?;";
-			
-		$params = array();
-		$params[] = $new_username;
-		$params[] = $id;
-	
-		$db->execSQLCmd($query,$params);
-	}
-	
-	public static function changeProfileId ($id,$new_profile_id){
-		$db = svdb::getInstance ();
-	
-		$query = "	UPDATE sv_users u
-	        		SET profile_id = ?
-	        		WHERE id = ?;";
-			
-		$params = array();
-		$params[] = $new_profile_id;
-		$params[] = $id;
-	
-		$db->execSQLCmd($query,$params);
-	}
-		
 	
 	/**
 	 *
@@ -456,22 +412,5 @@ class User {
 		$db->execSQLCmd($query,$params);
 		
 		return $new_permission;
-	}
-	
-	public static function HomePageLink () {
-		$db = svdb::getInstance ();
-		
-		$query = "SELECT DISTINCT pr.home_page
-				FROM sv_profiles pr
-				WHERE pr.id = ?;";
-		
-		$params = array();
-		$params[] = $_SESSION['sv_user']->getProfileId();
-		
-		$result = $db->query($query,$params);
-		
-		$row = $result->fetchAssoc();
-		
-		return $row['home_page'];
 	}
 }

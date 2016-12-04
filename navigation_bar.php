@@ -26,7 +26,7 @@
   <div class="container">
 	<div class="col-md-2">
 		<ul class = "logo">
-			<li><a href="<?php echo config::url() . user::HomePageLink() ?>"><img src = "images/svlogo.png"></a></li>
+			<li><a href="<?php echo config::url() ?>/"><img src = "images/svlogo.png"></a></li>
 		</ul>
 	</div>
 	<div class = "col-md-10 options">

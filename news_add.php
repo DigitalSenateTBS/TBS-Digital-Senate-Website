@@ -5,7 +5,7 @@ require_once __DIR__ . '/top_all.php';
 <?php
 	
 	$position = "";
-	$audience = 0;
+	$audience = "";
 	$title = "";
 	$content = "";
 	$status = "";
@@ -29,11 +29,8 @@ require_once __DIR__ . '/top_all.php';
 	
 	
 	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-		
-		if (isset ($_POST['audience']) ){
-			$audience = array_sum(array_map('intval', $_POST['audience']));
-		}
-		$position = $_POST ['position'];		
+		$position = $_POST ['position'];
+		$audience = 1;
 		$title = $_POST['title'];
 		$content = $_POST['content'];
 		$status = $_POST['status'];	
@@ -73,8 +70,8 @@ require_once __DIR__ . '/top_all.php';
 					<label class="radio-inline"><input type="radio" name="position" value="<?php echo news::bottomPosValue?>" <?php if ($article->getPosition() == news::bottomPosValue){echo "checked";}?>>Bottom</label>
 	    		</div>
 	    		<div class="form-group">
-	    			<label for="title">Article Title:</label> <?php //TODO DEAL WITH CASE WHEN TITLE IS TOO BIG?>
-    				<input type="text" class="form-control" name="title" value="<?php echo $article->getTitle();?>" maxlength="64" autofocus>
+	    			<label for="title">Article Title:</label>
+    				<input type="text" class="form-control" name="title" value="<?php echo $article->getTitle();?>">
 	    		</div>
 	    		<div class="form-group">
 					<label for="content">Content:</label>
@@ -85,39 +82,6 @@ require_once __DIR__ . '/top_all.php';
 	    			<label class="radio-inline"><input type="radio" name="status" value="active" <?php if ($article->getStatus() == "active"){echo "checked";}?>>Active</label>
 					<label class="radio-inline"><input type="radio" name="status" value="hidden" <?php if ($article->getStatus() == "hidden"){echo "checked";}?>>Hidden</label>
 	    		</div>
-	    		<?php //TODO MAKE BEAUTIFUL INTERFACE WITH ALL, KS3, IGCSE AND IB CHECKBOXES
-		    		$db = svdb::getInstance ();
-		    		
-		    		$query = "	SELECT
-								c.class_name name,
-								c.class_value value
-								FROM sv_classes c;";
-	        			
-		    		$result = $db->query($query);
-		    		
-		    		$num = $result->numRows();
-		    		
-		    		$article_audience = $article->getAudience();
-		    		
-		    		if ($num > 0) {
-		    			
-		    			echo "<div class='form-group'><label for='status'> Audience: </label>";
-		    			
-			    		for($i = 0; $i < $num; $i++){
-			    			$row = $result->fetchAssoc();
-			    		
-			    			$name = $row['name'];
-			    			$value = intval($row ['value']);
-			    			
-			    			echo"<label class='checkbox-inline'><input type='checkbox' name='audience[]' value='" . $value . "'";
-			    			if (($article_audience & $value) > 0){echo " checked";}
-			    			echo ">" . $name . "</label>";
-			    		}
-			    		
-			    		echo "</div>";
-		    		}
-		    		
-	    		?>
 	    		
 				<div>
 					<a href="<?php echo config::url() . user::getLinkPath('news_review')?>" class="btn btn-danger">Cancel</a>

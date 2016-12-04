@@ -16,17 +16,13 @@ require_once __DIR__ . '/top_all.php';
 				svc.url = "<?php echo config::url() . user::getLinkPath('news_actions');?>";
 				svc.type = 'POST';
 				svc.title = "News";
-				svc.successFunction = refreshTable;
+				svc.successFunction = function (result, params) {$('#tab' + params.articlePosition).html(result.new_html);};
 				svc.addParam ('articleId', id);
 				svc.addParam ('articleAction', action);
 				svc.addParam ('articlePosition', position )
 				svc.callService();
 			}
 
-			function refreshTable (result, params) {
-				$('#tab' + params.articlePosition).html(result.new_html);
-			}
-			
 			function confirmDelete (id,position){
 				var ok_function = "actionCall('delete'," + id + "," + position + ");";
 				warningModal("Warning","Are you sure you want to delete?", ok_function,"Delete");

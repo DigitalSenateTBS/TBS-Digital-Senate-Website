@@ -9,7 +9,7 @@
         
     <style>
         .jumbotron {
-            background-image:url('images/contacts.jpg');
+            background-image:url('images/contacts.JPG');
         }
     </style>
         <title>Contacts - <?php echo config::site_title() ?></title>
@@ -46,14 +46,10 @@
               	//TODO Be able to order results
               	$db = svdb::getInstance();
               	
-              	$query = "SELECT tc.name, tc.subject, tc.email
-						  FROM sv_teachers_contacts tc
-						  WHERE site = ?;";
-              	
-              	$params = array();
-              	$params[] = $_SESSION['sv_user']->getSite();
+              	$query = "SELECT u.name, u.subject, u.email
+						 FROM sv_teachers_contacts u ;";
     			
-    			$result = $db->query($query,$params);
+    			$result = $db->query($query);
  
     			$num = $result->numRows();
     			

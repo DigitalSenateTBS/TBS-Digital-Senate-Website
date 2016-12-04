@@ -99,7 +99,7 @@
 
 .news-main h1{
     line-height: 2em;
-    margin-left: 2cm;
+    text-align: center;
     font-family: 'Shift', sans-serif;
     font-weight: bold;
     font-size: 40px;
@@ -107,7 +107,7 @@
 }
 
 .daily-bulletin h3 {
-    margin-left: 4cm; 
+    text-align: center; 
 }
 
 .daily-bulletin p {

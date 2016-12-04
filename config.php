@@ -13,7 +13,7 @@ class config {
 		}
 			
 		public static function url () {
-			return "http://tbsvanguard.com";
+			return "http://localhost/sv";
 		}
 			
 		public static function site_title () {
